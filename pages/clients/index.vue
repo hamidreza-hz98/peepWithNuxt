@@ -1,39 +1,50 @@
 <template>
     <v-container>
         <v-row>
-            <SearchClient />
+            <v-col cols="3">
+                <v-text-field v-model="search" label="Search" prepend-inner-icon="mdi-magnify" solo>
+                </v-text-field>
+            </v-col>
             <v-spacer />
-            <ModalForm @onSubmit="addClient($event)" />
+            <v-btn color="primary" @click="openNewClientDialog()">Add</v-btn>
+            <ModalForm v-model="openNewClient" :client="client" @onSubmit="addClient($event)" />
         </v-row>
-        <ClientsTable :items="clients" />
+        <ClientsTable :items="clients" :search="search" />
     </v-container>
 </template>
 
 <script>
 import ClientsTable from '../../components/ClientsTable/ClientsTable.vue'
-import NewClientForm from '../../components/NewClientForm.vue'
 import ModalForm from '../../components/ModalForm/ModalForm.vue'
 import SearchClient from '../../components/SearchClient.vue'
+import { mapState } from 'vuex'
+
 export default {
+    //Here we get the clients list from the store to sow them on the table
     computed: {
-        clients() {
-            return this.$store.state.clients
-        }
+        ...mapState({ clients: 'clients' })
     },
-    components: { ClientsTable, NewClientForm, ModalForm, SearchClient },
+
+    components: { ClientsTable, ModalForm, SearchClient },
 
     data() {
         return {
+            openNewClient: false,
+            search: '',
+            //I pass empty object to the modal when creating a new client so that
+            // we won't get undefined error
+            client: {}
         }
     },
+
     methods: {
+        //Here we just call the mutation from the store
         addClient(client) {
-            const newClient = {
-                ...client,
-                name: client.firstName + ' ' + client.lastName,
-                dateOfBirth: client.birthDay + client.birthMonth + client.birthYear
-            }
-            this.$store.commit('addClient', newClient)
+            this.$store.commit('addClient', client)
+        },
+
+        openNewClientDialog() {
+            this.openNewClient = true
         }
     }
 }

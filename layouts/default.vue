@@ -12,16 +12,8 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-        <v-app-bar :clipped-left="clipped" fixed app>
-            <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-            <v-toolbar-title v-text="title" />
-            <v-spacer />
-            <v-icon>mdi-magnify</v-icon>
-            <v-icon>mdi-bell-outline</v-icon>
-            <v-avatar color="primary" size="38">
-                <span class="white--text">CJ</span>
-            </v-avatar>
-        </v-app-bar>
+
+        <NavBar :clipped="clipped" @toggleDrawer="changeDrawer()" />
 
         <v-main>
             <Nuxt />
@@ -30,8 +22,9 @@
 </template>
 
 <script>
+import NavBar from '../components/navBar.vue';
 export default {
-    name: 'DefaultLayout',
+    name: "DefaultLayout",
     data() {
         return {
             clipped: false,
@@ -39,45 +32,49 @@ export default {
             fixed: false,
             items: [
                 {
-                    icon: 'mdi-home',
-                    title: 'Home',
-                    to: '/home'
+                    icon: "mdi-home",
+                    title: "Home",
+                    to: "/home"
                 },
                 {
-                    icon: 'mdi-calendar',
-                    title: 'Calendar',
-                    to: '/calendar'
+                    icon: "mdi-calendar",
+                    title: "Calendar",
+                    to: "/calendar"
                 },
                 {
-                    icon: 'mdi-home',
-                    title: 'Clients',
-                    to: '/clients'
+                    icon: "mdi-home",
+                    title: "Clients",
+                    to: "/clients"
                 },
                 {
-                    icon: 'mdi-home',
-                    title: 'Staff',
-                    to: '/staff'
+                    icon: "mdi-home",
+                    title: "Staff",
+                    to: "/staff"
                 },
                 {
-                    icon: 'mdi-home',
-                    title: 'Services',
-                    to: '/services'
+                    icon: "mdi-home",
+                    title: "Services",
+                    to: "/services"
                 },
                 {
-                    icon: 'mdi-home',
-                    title: 'Offers',
-                    to: '/offers'
+                    icon: "mdi-home",
+                    title: "Offers",
+                    to: "/offers"
                 },
                 {
-                    icon: 'mdi-home',
-                    title: 'Sales',
-                    to: '/sales'
+                    icon: "mdi-home",
+                    title: "Sales",
+                    to: "/sales"
                 },
-
             ],
             miniVariant: false,
-            title: 'Vuetify.js'
+        };
+    },
+    methods: {
+        changeDrawer() {
+            this.drawer = !this.drawer
         }
-    }
+    },
+    components: { NavBar }
 }
 </script>
