@@ -1,21 +1,39 @@
 <template>
-    <v-app>
-        <v-navigation-drawer v-model="drawer" :clipped="clipped" fixed app>
-            <v-list>
+    <v-app class="default" :style="cssProps">
+        <v-navigation-drawer class="sidebar" color="primary" v-model="drawer" :clipped="clipped" fixed app>
+
+            <v-container class="logo-container">
+                <b>peep</b>
+            </v-container>
+
+            <v-list class="sidebar-options">
                 <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
                     <v-list-item-action>
-                        <v-icon>{{ item.icon }}</v-icon>
+                        <v-icon class="sidebar-buttons">{{ item.icon }}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title v-text="item.title" />
+                        <v-list-item-title class="sidebar-buttons" v-text="item.title" />
                     </v-list-item-content>
                 </v-list-item>
+                <div id="sidebar-settings">
+                    <v-divider />
+                    <v-list-item>
+                        <v-list-item-action>
+                            <v-icon class="sidebar-buttons">mdi-home</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title class="sidebar-buttons">Settings</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-divider />
+                </div>
             </v-list>
+
         </v-navigation-drawer>
 
         <NavBar :clipped="clipped" @toggleDrawer="changeDrawer()" />
 
-        <v-main>
+        <v-main class="main">
             <Nuxt />
         </v-main>
     </v-app>
@@ -25,6 +43,17 @@
 import NavBar from '../components/navBar.vue';
 export default {
     name: "DefaultLayout",
+
+    computed: {
+        cssProps() {
+            const themeColors = {}
+            Object.keys(this.$vuetify.theme.themes.light).forEach((color) => {
+                themeColors[`--v-${color}`] = this.$vuetify.theme.themes.light[color]
+            })
+            return themeColors
+        },
+    },
+
     data() {
         return {
             clipped: false,
@@ -78,3 +107,13 @@ export default {
     components: { NavBar }
 }
 </script>
+
+
+<style>
+@import url("https://fonts.googleapis.com/css?family=Quicksand");
+
+.default {
+    font-family: 'Quicksand', 'Arial';
+    font-weight: 500;
+}
+</style>

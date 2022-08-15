@@ -1,7 +1,7 @@
 <template>
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar class="navbar" :clipped-left="clipped" fixed app>
         <v-app-bar-nav-icon @click="changeDrawer()" />
-        <v-toolbar-title v-text="title" />
+        <v-toolbar-title class="navbar-title" v-text="title" />
         <v-spacer />
         <v-icon>mdi-magnify</v-icon>
         <v-icon>mdi-bell-outline</v-icon>
